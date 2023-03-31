@@ -1,20 +1,15 @@
 import TasksList from "./TasksList.js";
+import TaskCreate from "./TaskCreate.js";
 
 export default {
-    components: { TasksList },
+    components: { TasksList, TaskCreate },
 
     template: `
         <section class="space-y-6">
             <tasks-list v-bind:tasks="filters.inProgress" title="In progress"></tasks-list>
             <tasks-list v-bind:tasks="filters.completed" title="Completed"></tasks-list>
             
-            <form action="" v-on:submit.prevent="add">
-                <div class="border border-gray-600 text-black">
-                    <input v-model="newTask" type="text" placeholder="New task..." class="p-2">
-                    <button type="submit" class="bg-white p-2 border-l">Add</button>
-                </div>
-            </form>
-            
+            <task-create v-on:add="add" ></task-create>
         </section>
     `,
 
@@ -25,8 +20,6 @@ export default {
                 { name: 'Read chapter 4', complete: false, id: 2 },
                 { name: 'Turn in homework', complete: false, id: 3 },
             ],
-
-            newTask: ''
         }
     },
 
@@ -40,14 +33,12 @@ export default {
     },
 
     methods: {
-        add() {
+        add(name) {
             this.tasks.push({
-                name: this.newTask,
+                name: name,
                 completed: false,
                 id: this.tasks.length + 1
             });
-
-            this.newTask = '';
         }
     }
 }
