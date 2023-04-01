@@ -1,7 +1,8 @@
 import Task from "./Task.js";
+import TaskTags from "./TaskTags.js";
 
 export default {
-    components: { Task },
+    components: { Task, TaskTags },
 
     template: `
         <section v-show="tasks.length">
@@ -10,18 +11,11 @@ export default {
                 <span>({{ tasks.length }})</span>
             </h2>
     
-            <div class="flex gap-2">
-                <button 
-                    v-on:click="currentTag = tag"
-                    v-for="tag in tags" 
-                    class="border rounded px-1 py-px text-xs"
-                    v-bind:class="{
-                        'border-blue-500 text-blue-500': tag === currentTag
-                    }"
-                >
-                    {{ tag }}
-                </button>
-            </div>
+            <task-tags 
+                v-bind:initial-tags="tasks.map(a => a.tag)"
+                v-bind:current-tag="currentTag"
+                v-on:change="currentTag = $event"
+            />
             
             <ul class="border border-gray-600 divide-y divide-gray-600 mt-6">
                 <task 
@@ -52,9 +46,5 @@ export default {
 
             return this.tasks.filter(a => a.tag === this.currentTag);
         },
-
-        tags() {
-            return ['All', ...new Set(this.tasks.map(a => a.tag))];
-        }
     }
 }
