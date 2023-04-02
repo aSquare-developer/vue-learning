@@ -15,11 +15,7 @@ export default {
 
     data() {
         return {
-            tasks: [
-                { name: 'Finish project', complete: false, id: 1, tag: 'math' },
-                { name: 'Read chapter 4', complete: false, id: 2, tag: 'science' },
-                { name: 'Turn in homework', complete: false, id: 3, tag: 'math' },
-            ],
+            tasks: [],
         }
     },
 
@@ -30,6 +26,14 @@ export default {
                 completed: this.tasks.filter(task => task.complete)
             };
         }
+    },
+
+    created() {
+      fetch('http://localhost:3001/tasks')
+          .then(response => response.json())
+          .then(tasks => {
+             this.tasks = tasks
+          });
     },
 
     methods: {
