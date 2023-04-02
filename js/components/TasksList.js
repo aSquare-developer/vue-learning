@@ -12,9 +12,8 @@ export default {
             </h2>
     
             <task-tags 
+                v-model:currentTag="currentTag"
                 v-bind:initial-tags="tasks.map(a => a.tag)"
-                v-bind:current-tag="currentTag"
-                v-on:change="currentTag = $event"
             />
             
             <ul class="border border-gray-600 divide-y divide-gray-600 mt-6">
