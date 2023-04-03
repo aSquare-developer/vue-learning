@@ -1,16 +1,21 @@
 import Task from "./Task.js";
 import TaskTags from "./TaskTags.js";
+import TaskCreate from "./TaskCreate.js";
 
 export default {
-    components: { Task, TaskTags },
+    components: { Task, TaskTags, TaskCreate },
 
     template: `
-        <section v-show="tasks.length">
-            <h2 class="font-bold mb-2">
-                {{ title }}
-                <span>({{ tasks.length }})</span>
-            </h2>
-    
+        <section v-show="tasks.length" class="w-60">
+            <div class="flex justify-between items-start">
+                <h2 class="font-bold mb-2">
+                    {{ title }}
+                    <span>({{ tasks.length }})</span>
+                </h2>
+                
+                <button v-show="canToggle" v-on:click="$emit('toggle')">&times;</button>
+            </div>
+            
             <task-tags 
                 v-model:currentTag="currentTag"
                 v-bind:initial-tags="tasks.map(a => a.tag)"
@@ -23,17 +28,20 @@ export default {
                     v-bind:task="task"
                 ></task>
             </ul>
+            
+            <slot></slot>
         </section>
     `,
 
     props: {
         tasks: Array,
-        title: String
+        title: String,
+        canToggle: { type: Boolean, default: false }
     },
 
     data() {
         return {
-            currentTag: 'All'
+            currentTag: 'All',
         };
     },
 

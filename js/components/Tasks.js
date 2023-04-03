@@ -5,17 +5,26 @@ export default {
     components: { TasksList, TaskCreate },
 
     template: `
-        <section class="space-y-6">
-            <tasks-list v-bind:tasks="filters.inProgress" title="In progress"></tasks-list>
-            <tasks-list v-bind:tasks="filters.completed" title="Completed"></tasks-list>
+        <section class="flex gap-8">
+            <tasks-list v-bind:tasks="filters.inProgress" title="In progress">
+                <task-create v-on:add="add" ></task-create>
+            </tasks-list>
             
-            <task-create v-on:add="add" ></task-create>
+            <div v-show="showCompleted">
+                <tasks-list
+                    v-bind:tasks="filters.completed" 
+                    title="Completed" 
+                    can-toggle
+                    v-on:toggle="showCompleted = !showCompleted"
+                ></tasks-list>
+            </div>
         </section>
     `,
 
     data() {
         return {
             tasks: [],
+            showCompleted: true
         }
     },
 
