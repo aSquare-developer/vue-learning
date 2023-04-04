@@ -1,12 +1,12 @@
 import Task from "./Task.js";
 import TaskTags from "./TaskTags.js";
-import TaskCreate from "./TaskCreate.js";
+import Panel from "./Panel.js";
 
 export default {
-    components: { Task, TaskTags, TaskCreate },
+    components: { Task, TaskTags, Panel },
 
     template: `
-        <section v-show="tasks.length" class="w-60">
+        <panel v-show="tasks.length" class="w-60">
             <div class="flex justify-between items-start">
                 <h2 class="font-bold mb-2">
                     {{ title }}
@@ -30,7 +30,11 @@ export default {
             </ul>
             
             <slot></slot>
-        </section>
+            
+<!--            <template v-slot:footer>-->
+<!--                My footer goes here!-->
+<!--            </template>-->
+        </panel>
     `,
 
     props: {
